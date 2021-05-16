@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:login_anja_mona/welcome.dart';
 import 'database/database_helper.dart';
 import 'input_text_field.dart';
 import 'model/user.dart';
@@ -80,10 +81,9 @@ class _LoginState extends State<Login> {
                       ),
                       color: Colors.teal[700],
                       onPressed: () async {
-                        await setState(() {
                           debugPrint("Save button clicked");
-                          _save();
-                        });
+                          await _save();
+                         _navigateNext();
                       },
                       child: Container(
                         width: double.infinity,
@@ -167,7 +167,14 @@ class _LoginState extends State<Login> {
     print('user $idCurrentUser');
     user = await helper.getCurrentUser(idCurrentUser);
     print(user.name);
+    print(user.password);
     return user;
+  }
+
+  _navigateNext() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => Welcome(userID: idCurrentUser),),
+    );
   }
 
 /*
